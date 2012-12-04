@@ -184,8 +184,10 @@ int QX11Info::appScreen()
 */
 unsigned long QX11Info::appTime()
 {
-    // ### TODO implement
-    return 0L;
+    if (!qApp)
+        return 0;
+    QPlatformNativeInterface *native = qApp->platformNativeInterface();
+    return static_cast<xcb_timestamp_t>(reinterpret_cast<quintptr>(native->nativeResourceForIntegration("apptime")));
 }
 
 /*!
@@ -195,8 +197,10 @@ unsigned long QX11Info::appTime()
 */
 unsigned long QX11Info::appUserTime()
 {
-    // ### TODO implement
-    return 0L;
+    if (!qApp)
+        return 0;
+    QPlatformNativeInterface *native = qApp->platformNativeInterface();
+    return static_cast<xcb_timestamp_t>(reinterpret_cast<quintptr>(native->nativeResourceForIntegration("appusertime")));
 }
 
 /*!
@@ -206,8 +210,15 @@ unsigned long QX11Info::appUserTime()
 */
 void QX11Info::setAppTime(unsigned long time)
 {
-    // ### TODO implement
-    Q_UNUSED(time);
+    if (!qApp)
+        return;
+    QPlatformNativeInterface *native = qApp->platformNativeInterface();
+    typedef void (*SetAppTimeFunc)(xcb_timestamp_t);
+    SetAppTimeFunc func = reinterpret_cast<SetAppTimeFunc>(native->nativeResourceFunctionForIntegration("setapptime"));
+    if (func)
+        func(time);
+    else
+        qWarning("Internal error: QPA plugin doesn't implement setAppTime");
 }
 
 /*!
@@ -220,13 +231,12 @@ void QX11Info::setAppUserTime(unsigned long time)
     if (!qApp)
         return;
     QPlatformNativeInterface *native = qApp->platformNativeInterface();
-
-    QDesktopWidget *desktop = QApplication::desktop();
-    QWindow *window = desktop->windowHandle();
-
-    xcb_timestamp_t timestamp = uint32_t(time);
-    QMetaObject::invokeMethod(native, "updateNetWmUserTime", Qt::DirectConnection,
-                              Q_ARG(QWindow *,window), Q_ARG(xcb_timestamp_t, timestamp));
+    typedef void (*SetAppUserTimeFunc)(xcb_timestamp_t);
+    SetAppUserTimeFunc func = reinterpret_cast<SetAppUserTimeFunc>(native->nativeResourceFunctionForIntegration("setappusertime"));
+    if (func)
+        func(time);
+    else
+        qWarning("Internal error: QPA plugin doesn't implement setAppUserTime");
 }
 
 /*!
