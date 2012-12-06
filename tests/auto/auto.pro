@@ -1,3 +1,4 @@
 TEMPLATE=subdirs
 SUBDIRS=\
-           qx11info
+           qx11info \
+           cmake
