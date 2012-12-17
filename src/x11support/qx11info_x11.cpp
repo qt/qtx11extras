@@ -187,7 +187,8 @@ unsigned long QX11Info::appTime()
     if (!qApp)
         return 0;
     QPlatformNativeInterface *native = qApp->platformNativeInterface();
-    return static_cast<xcb_timestamp_t>(reinterpret_cast<quintptr>(native->nativeResourceForIntegration("apptime")));
+    QScreen* screen = QGuiApplication::primaryScreen();
+    return static_cast<xcb_timestamp_t>(reinterpret_cast<quintptr>(native->nativeResourceForScreen("apptime", screen)));
 }
 
 /*!
@@ -200,7 +201,8 @@ unsigned long QX11Info::appUserTime()
     if (!qApp)
         return 0;
     QPlatformNativeInterface *native = qApp->platformNativeInterface();
-    return static_cast<xcb_timestamp_t>(reinterpret_cast<quintptr>(native->nativeResourceForIntegration("appusertime")));
+    QScreen* screen = QGuiApplication::primaryScreen();
+    return static_cast<xcb_timestamp_t>(reinterpret_cast<quintptr>(native->nativeResourceForScreen("appusertime", screen)));
 }
 
 /*!
@@ -213,10 +215,11 @@ void QX11Info::setAppTime(unsigned long time)
     if (!qApp)
         return;
     QPlatformNativeInterface *native = qApp->platformNativeInterface();
-    typedef void (*SetAppTimeFunc)(xcb_timestamp_t);
-    SetAppTimeFunc func = reinterpret_cast<SetAppTimeFunc>(native->nativeResourceFunctionForIntegration("setapptime"));
+    typedef void (*SetAppTimeFunc)(QScreen *, xcb_timestamp_t);
+    QScreen* screen = QGuiApplication::primaryScreen();
+    SetAppTimeFunc func = reinterpret_cast<SetAppTimeFunc>(native->nativeResourceFunctionForScreen("setapptime"));
     if (func)
-        func(time);
+        func(screen, time);
     else
         qWarning("Internal error: QPA plugin doesn't implement setAppTime");
 }
@@ -231,10 +234,11 @@ void QX11Info::setAppUserTime(unsigned long time)
     if (!qApp)
         return;
     QPlatformNativeInterface *native = qApp->platformNativeInterface();
-    typedef void (*SetAppUserTimeFunc)(xcb_timestamp_t);
-    SetAppUserTimeFunc func = reinterpret_cast<SetAppUserTimeFunc>(native->nativeResourceFunctionForIntegration("setappusertime"));
+    typedef void (*SetAppUserTimeFunc)(QScreen *, xcb_timestamp_t);
+    QScreen* screen = QGuiApplication::primaryScreen();
+    SetAppUserTimeFunc func = reinterpret_cast<SetAppUserTimeFunc>(native->nativeResourceFunctionForScreen("setappusertime"));
     if (func)
-        func(time);
+        func(screen, time);
     else
         qWarning("Internal error: QPA plugin doesn't implement setAppUserTime");
 }
