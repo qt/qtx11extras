@@ -39,8 +39,8 @@
 **
 ****************************************************************************/
 
-#ifndef QTX11SUPPORTGLOBAL_H
-#define QTX11SUPPORTGLOBAL_H
+#ifndef QTX11EXTRASGLOBAL_H
+#define QTX11EXTRASGLOBAL_H
 
 #include <QtCore/qglobal.h>
 
@@ -49,17 +49,17 @@ QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_STATIC
-#  if defined(QT_BUILD_X11SUPPORT_LIB)
-#    define Q_X11SUPPORT_EXPORT Q_DECL_EXPORT
+#  if defined(QT_BUILD_X11EXTRAS_LIB)
+#    define Q_X11EXTRAS_EXPORT Q_DECL_EXPORT
 #  else
-#    define Q_X11SUPPORT_EXPORT Q_DECL_IMPORT
+#    define Q_X11EXTRAS_EXPORT Q_DECL_IMPORT
 #  endif
 #else
-#  define Q_X11SUPPORT_EXPORT
+#  define Q_X11EXTRAS_EXPORT
 #endif
 
 QT_END_NAMESPACE
 
 QT_END_HEADER
 
-#endif // QTX11SUPPORTGLOBAL_H
+#endif // QTX11EXTRASGLOBAL_H

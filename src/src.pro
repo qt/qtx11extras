@@ -1,2 +1,2 @@
 TEMPLATE = subdirs
-SUBDIRS +=  x11support
+SUBDIRS +=  x11extras

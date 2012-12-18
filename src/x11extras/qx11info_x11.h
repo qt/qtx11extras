@@ -43,7 +43,7 @@
 #define QX11INFO_X11_H
 
 #include <QtCore/qnamespace.h>
-#include "QtX11Support/qtx11supportglobal.h"
+#include "QtX11Extras/qtx11extrasglobal.h"
 
 typedef struct _XDisplay Display;
 struct xcb_connection_t;
@@ -52,7 +52,7 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-class Q_X11SUPPORT_EXPORT QX11Info
+class Q_X11EXTRAS_EXPORT QX11Info
 {
 public:
     static int appDpiX(int screen=-1);

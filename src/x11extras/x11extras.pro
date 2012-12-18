@@ -1,8 +1,8 @@
-TARGET     = QtX11Support
+TARGET     = QtX11Extras
 
 DEFINES += QT_NO_USING_NAMESPACE
 
-QMAKE_DOCS = $$PWD/doc/qtx11support.qdocconf
+QMAKE_DOCS = $$PWD/doc/qtx11extras.qdocconf
 
 load(qt_module)
 

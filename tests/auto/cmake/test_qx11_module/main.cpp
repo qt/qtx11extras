@@ -1,8 +1,8 @@
 
 #include <QX11Info>
-#include <QtX11Support/QX11Info>
-#include <QtX11Support/QtX11Support>
-#include <QtX11Support>
+#include <QtX11Extras/QX11Info>
+#include <QtX11Extras/QtX11Extras>
+#include <QtX11Extras>
 
 int main(int argc, char **argv)
 {
