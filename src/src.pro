@@ -1,2 +1,4 @@
 TEMPLATE = subdirs
-SUBDIRS +=  x11extras
+contains(QT_CONFIG, xcb) {
+  SUBDIRS += x11extras
+}
