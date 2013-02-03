@@ -48,8 +48,6 @@
 typedef struct _XDisplay Display;
 struct xcb_connection_t;
 
-QT_BEGIN_HEADER
-
 QT_BEGIN_NAMESPACE
 
 class Q_X11EXTRAS_EXPORT QX11Info
@@ -75,8 +73,6 @@ private:
 };
 
 QT_END_NAMESPACE
-
-QT_END_HEADER
 
 #endif // QX11INFO_X11_H
 
