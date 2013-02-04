@@ -58,7 +58,7 @@ public:
     static int appDpiX(int screen=-1);
     static int appDpiY(int screen=-1);
 
-    static Qt::HANDLE appRootWindow(int screen=-1);
+    static unsigned long appRootWindow(int screen=-1);
     static int appScreen();
 
     static unsigned long appTime();

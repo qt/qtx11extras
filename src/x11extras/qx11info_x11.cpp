@@ -145,7 +145,7 @@ int QX11Info::appDpiY(int screen)
 
     \sa QApplication::desktop()
 */
-Qt::HANDLE QX11Info::appRootWindow(int screen)
+unsigned long QX11Info::appRootWindow(int screen)
 {
     if (!qApp)
         return 0;
@@ -160,7 +160,7 @@ Qt::HANDLE QX11Info::appRootWindow(int screen)
     QDesktopWidget *desktop = QApplication::desktop();
     QWindow *window = desktop->windowHandle();
 #endif
-    return Qt::HANDLE(window->winId());
+    return window->winId();
 }
 
 /*!

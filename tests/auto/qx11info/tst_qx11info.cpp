@@ -81,8 +81,8 @@ void tst_QX11Info::staticFunctionsBeforeQApplication()
     void *appVisual = QX11Info::appVisual();
     QCOMPARE(appVisual, static_cast<void *>(0));
 #endif
-    Qt::HANDLE appRootWindow = QX11Info::appRootWindow();
-    QCOMPARE(appRootWindow, static_cast<Qt::HANDLE>(0));
+    unsigned long appRootWindow = QX11Info::appRootWindow();
+    QCOMPARE(appRootWindow, static_cast<unsigned long>(0));
 
 #if 0
     bool appDefaultColormap = QX11Info::appDefaultColormap();
