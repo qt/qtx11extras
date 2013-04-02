@@ -187,6 +187,8 @@ unsigned long QX11Info::appTime()
     if (!qApp)
         return 0;
     QPlatformNativeInterface *native = qApp->platformNativeInterface();
+    if (!native)
+        return 0;
     QScreen* screen = QGuiApplication::primaryScreen();
     return static_cast<xcb_timestamp_t>(reinterpret_cast<quintptr>(native->nativeResourceForScreen("apptime", screen)));
 }
@@ -201,6 +203,8 @@ unsigned long QX11Info::appUserTime()
     if (!qApp)
         return 0;
     QPlatformNativeInterface *native = qApp->platformNativeInterface();
+    if (!native)
+        return 0;
     QScreen* screen = QGuiApplication::primaryScreen();
     return static_cast<xcb_timestamp_t>(reinterpret_cast<quintptr>(native->nativeResourceForScreen("appusertime", screen)));
 }
@@ -215,6 +219,8 @@ void QX11Info::setAppTime(unsigned long time)
     if (!qApp)
         return;
     QPlatformNativeInterface *native = qApp->platformNativeInterface();
+    if (!native)
+        return;
     typedef void (*SetAppTimeFunc)(QScreen *, xcb_timestamp_t);
     QScreen* screen = QGuiApplication::primaryScreen();
     SetAppTimeFunc func = reinterpret_cast<SetAppTimeFunc>(native->nativeResourceFunctionForScreen("setapptime"));
@@ -234,6 +240,8 @@ void QX11Info::setAppUserTime(unsigned long time)
     if (!qApp)
         return;
     QPlatformNativeInterface *native = qApp->platformNativeInterface();
+    if (!native)
+        return;
     typedef void (*SetAppUserTimeFunc)(QScreen *, xcb_timestamp_t);
     QScreen* screen = QGuiApplication::primaryScreen();
     SetAppUserTimeFunc func = reinterpret_cast<SetAppUserTimeFunc>(native->nativeResourceFunctionForScreen("setappusertime"));
@@ -253,6 +261,8 @@ Display *QX11Info::display()
     if (!qApp)
         return NULL;
     QPlatformNativeInterface *native = qApp->platformNativeInterface();
+    if (!native)
+        return NULL;
 
     void *display = native->nativeResourceForScreen(QByteArray("display"), QGuiApplication::primaryScreen());
     return reinterpret_cast<Display *>(display);
@@ -268,6 +278,8 @@ xcb_connection_t *QX11Info::connection()
     if (!qApp)
         return NULL;
     QPlatformNativeInterface *native = qApp->platformNativeInterface();
+    if (!native)
+        return NULL;
 
     void *connection = native->nativeResourceForWindow(QByteArray("connection"), 0);
     return reinterpret_cast<xcb_connection_t *>(connection);
