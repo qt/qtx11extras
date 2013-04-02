@@ -1,7 +1,10 @@
 include($QT_INSTALL_DOCS/global/qt-module-defaults.qdocconf)
 
 # Name of the project which must match the outputdir. Determines the .index file
-project = qtx11extras
+project                 = qtx11extras
+description             = Qt X11 Extras Reference Documentation
+url                     = http://qt-project.org/doc/qt-$QT_VER/qtx11extras
+version                 = $QT_VERSION
 
 # Directories in which to search for files to document and images.
 # By default set to the root directory of the project for sources
@@ -32,7 +35,7 @@ qhp.qtx11extras.file = qtx11extras.qhp
 
 # Namespace for the output file. This namespace is used to distinguish between
 # different documentation files in Creator/Assistant.
-qhp.qtx11extras.namespace = org.qt-project.qtx11extras.500
+qhp.qtx11extras.namespace = org.qt-project.qtx11extras.$QT_VERSION_TAG
 
 # Title for the package, will be the main title for the package in
 # Assistant/Creator.
