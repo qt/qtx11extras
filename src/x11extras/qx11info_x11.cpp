@@ -62,8 +62,9 @@ QT_BEGIN_NAMESPACE
 
 /*!
     \class QX11Info
-    \brief The QX11Info class provides information about the X display
-    configuration.
+    \inmodule QtX11Extras
+    \since 5.1
+    \brief Provides information about the X display configuration.
 
     The class provides two APIs: a set of non-static functions that
     provide information about a specific widget or pixmap, and a set

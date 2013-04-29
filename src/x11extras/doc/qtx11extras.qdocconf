@@ -1,27 +1,27 @@
 include($QT_INSTALL_DOCS/global/qt-module-defaults.qdocconf)
 
-project                 = qtx11extras
+project                 = QtX11Extras
 description             = Qt X11 Extras Reference Documentation
 url                     = http://qt-project.org/doc/qt-$QT_VER/qtx11extras
 version                 = $QT_VERSION
 
-qhp.projects            = qtx11extras
+qhp.projects            = QtX11Extras
 
-qhp.qtx11extras.file          = qtx11extras.qhp
-qhp.qtx11extras.namespace     = org.qt-project.qtx11extras.$QT_VERSION_TAG
-qhp.qtx11extras.virtualFolder = qtx11extras
-qhp.qtx11extras.indexTitle    = Qt X11 Extras
-qhp.qtx11extras.indexRoot     =
+qhp.QtX11Extras.file          = qtx11extras.qhp
+qhp.QtX11Extras.namespace     = org.qt-project.qtx11extras.$QT_VERSION_TAG
+qhp.QtX11Extras.virtualFolder = qtx11extras
+qhp.QtX11Extras.indexTitle    = Qt X11 Extras
+qhp.QtX11Extras.indexRoot     =
 
-qhp.qtx11extras.filterAttributes    = qtx11extras $QT_VERSION qtrefdoc
-qhp.qtx11extras.customFilters.Qt.name = QtX11Extras $QT_VERSION
-qhp.qtx11extras.customFilters.Qt.filterAttributes = qtx11extras $QT_VERSION
+qhp.QtX11Extras.filterAttributes    = qtx11extras $QT_VERSION qtrefdoc
+qhp.QtX11Extras.customFilters.Qt.name = QtX11Extras $QT_VERSION
+qhp.QtX11Extras.customFilters.Qt.filterAttributes = qtx11extras $QT_VERSION
 
-qhp.qtx11extras.subprojects = classes
-qhp.qtx11extras.subprojects.classes.title = C++ Classes
-qhp.qtx11extras.subprojects.classes.indexTitle = Qt X11 Extras C++ Classes
-qhp.qtx11extras.subprojects.classes.selectors = class fake:headerfile
-qhp.qtx11extras.subprojects.classes.sortPages = true
+qhp.QtX11Extras.subprojects = classes
+qhp.QtX11Extras.subprojects.classes.title = C++ Classes
+qhp.QtX11Extras.subprojects.classes.indexTitle = Qt X11 Extras C++ Classes
+qhp.QtX11Extras.subprojects.classes.selectors = class fake:headerfile
+qhp.QtX11Extras.subprojects.classes.sortPages = true
 
 depends += qtcore qtwidgets
 
