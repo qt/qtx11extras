@@ -36,16 +36,14 @@
     following directive:
 
     \code
-    #include <qx11info_x11.h>
+    #include <QX11Info>
     \endcode
 
     To link against the module, add this line to your \l qmake \c
     .pro file:
 
     \code
-    QT+=qtx11extras
+    QT += x11extras
     \endcode
-
-
 */
 
