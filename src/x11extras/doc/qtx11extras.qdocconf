@@ -23,7 +23,7 @@ qhp.QtX11Extras.subprojects.classes.indexTitle = Qt X11 Extras C++ Classes
 qhp.QtX11Extras.subprojects.classes.selectors = class fake:headerfile
 qhp.QtX11Extras.subprojects.classes.sortPages = true
 
-depends += qtcore qtwidgets
+depends += qtcore qtwidgets qtdoc
 
 headerdirs  += ..
 
@@ -33,3 +33,6 @@ exampledirs += ../../../examples \
                snippets
 
 imagedirs   += images
+
+navigation.landingpage = "Qt X11 Extras"
+navigation.cppclassespage = "Qt X11 Extras C++ Classes"
