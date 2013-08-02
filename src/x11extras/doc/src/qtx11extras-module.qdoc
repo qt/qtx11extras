@@ -29,6 +29,7 @@
     \module QtX11Extras
     \title Qt X11 Extras C++ Classes
     \ingroup modules
+    \qtvariable x11extras
 
     \brief Provides classes for developing for the X11 platform.
 
@@ -46,4 +47,3 @@
     QT += x11extras
     \endcode
 */
-
