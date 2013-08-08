@@ -65,6 +65,8 @@ public:
     static void setAppTime(unsigned long time);
     static void setAppUserTime(unsigned long time);
 
+    static unsigned long getTimestamp();
+
     static Display *display();
     static xcb_connection_t *connection();
 

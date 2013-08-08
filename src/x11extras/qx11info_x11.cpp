@@ -253,6 +253,25 @@ void QX11Info::setAppUserTime(unsigned long time)
 }
 
 /*!
+    Fetches the current X11 time stamp from the X Server.
+
+    This method creates a property notify event and blocks till it is
+    received back from the X Server.
+
+    \since 5.2
+*/
+unsigned long QX11Info::getTimestamp()
+{
+    if (!qApp)
+        return 0;
+    QPlatformNativeInterface *native = qApp->platformNativeInterface();
+    if (!native)
+        return 0;
+    QScreen* screen = QGuiApplication::primaryScreen();
+    return static_cast<xcb_timestamp_t>(reinterpret_cast<quintptr>(native->nativeResourceForScreen("gettimestamp", screen)));
+}
+
+/*!
     Returns the default display for the application.
 
     \sa appScreen()
