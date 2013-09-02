@@ -178,14 +178,27 @@ unsigned long QX11Info::appRootWindow(int screen)
     Returns the number of the screen where the application is being
     displayed.
 
+    This method refers to screens in the original X11 meaning with a
+    different DISPLAY environment variable per screen.
+    This information is only useful if your application needs to know
+    on which X screen it is running.
+
+    In a typical multi-head configuration, multiple physical monitors
+    are combined in one X11 screen. This means this method returns the
+    same number for each of the physical monitors. In such a setup you
+    are interested in the monitor information as provided by the X11
+    RandR extension. This is available through QDesktopWidget and QScreen.
+
     \sa display(), screen()
 */
 int QX11Info::appScreen()
 {
     if (!qApp)
         return 0;
-    QDesktopWidget *desktop = QApplication::desktop();
-    return desktop->primaryScreen();
+    QPlatformNativeInterface *native = qApp->platformNativeInterface();
+    if (!native)
+        return 0;
+    return reinterpret_cast<qintptr>(native->nativeResourceForIntegration(QByteArrayLiteral("x11screen")));
 }
 
 /*!
