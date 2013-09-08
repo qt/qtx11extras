@@ -83,6 +83,16 @@ QX11Info::QX11Info()
 }
 
 /*!
+    Returns true if the application is currently running on X11.
+
+    \since 5.2
+ */
+bool QX11Info::isPlatformX11()
+{
+    return QGuiApplication::platformName() == QLatin1String("xcb");
+}
+
+/*!
     Returns the horizontal resolution of the given \a screen in terms of the
     number of dots per inch.
 

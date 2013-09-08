@@ -52,6 +52,7 @@ class tst_QX11Info : public QObject
 
 private slots:
     void staticFunctionsBeforeQApplication();
+    void isPlatformX11();
     void appTime();
 };
 
@@ -118,6 +119,14 @@ void tst_QX11Info::staticFunctionsBeforeQApplication()
     appUserTime = QX11Info::appUserTime();
     QCOMPARE(appTime, 0ul);
     QCOMPARE(appTime, 0ul);
+}
+
+void tst_QX11Info::isPlatformX11()
+{
+    int argc = 0;
+    QApplication app(argc, 0);
+
+    QVERIFY(QX11Info::isPlatformX11());
 }
 
 void tst_QX11Info::appTime()

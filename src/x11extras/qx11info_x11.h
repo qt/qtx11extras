@@ -53,6 +53,8 @@ QT_BEGIN_NAMESPACE
 class Q_X11EXTRAS_EXPORT QX11Info
 {
 public:
+    static bool isPlatformX11();
+
     static int appDpiX(int screen=-1);
     static int appDpiY(int screen=-1);
 
