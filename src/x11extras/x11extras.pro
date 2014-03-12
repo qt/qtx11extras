@@ -6,7 +6,7 @@ QMAKE_DOCS = $$PWD/doc/qtx11extras.qdocconf
 
 load(qt_module)
 
-QT += widgets gui-private
+QT += gui-private
 
 HEADERS += qx11info_x11.h
 SOURCES += qx11info_x11.cpp

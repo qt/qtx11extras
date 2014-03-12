@@ -1,3 +1,3 @@
-requires(qtHaveModule(widgets))
+requires(qtHaveModule(gui))
 
 load(qt_parts)

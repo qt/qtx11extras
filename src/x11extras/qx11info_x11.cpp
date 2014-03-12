@@ -52,9 +52,8 @@
 #include <qpa/qplatformnativeinterface.h>
 #include <qpa/qplatformwindow.h>
 #include <qscreen.h>
-#include <qdesktopwidget.h>
 #include <qwindow.h>
-#include <qapplication.h>
+#include <qguiapplication.h>
 #include <xcb/xcb.h>
 
 QT_BEGIN_NAMESPACE
