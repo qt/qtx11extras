@@ -1,4 +1,6 @@
 TEMPLATE=subdirs
-SUBDIRS=\
-           qx11info \
-           cmake
+SUBDIRS=cmake
+
+qtHaveModule(widgets) {
+    SUBDIRS += qx11info
+}
