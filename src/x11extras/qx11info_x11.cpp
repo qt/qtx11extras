@@ -52,9 +52,8 @@
 #include <qpa/qplatformnativeinterface.h>
 #include <qpa/qplatformwindow.h>
 #include <qscreen.h>
-#include <qdesktopwidget.h>
 #include <qwindow.h>
-#include <qapplication.h>
+#include <qguiapplication.h>
 #include <xcb/xcb.h>
 
 QT_BEGIN_NAMESPACE
@@ -160,18 +159,11 @@ unsigned long QX11Info::appRootWindow(int screen)
 {
     if (!qApp)
         return 0;
-#if 0
-    // This looks like it should work, but gives the wrong value.
-    QDesktopWidget *desktop = QApplication::desktop();
-    QWidget *screenWidget = desktop->screen(screen);
-    QWindow *window = screenWidget->windowHandle();
-#else
     Q_UNUSED(screen);
-
-    QDesktopWidget *desktop = QApplication::desktop();
-    QWindow *window = desktop->windowHandle();
-#endif
-    return window->winId();
+    QPlatformNativeInterface *native = qApp->platformNativeInterface();
+    if (!native)
+        return 0;
+    return static_cast<xcb_window_t>(reinterpret_cast<quintptr>(native->nativeResourceForIntegration(QByteArrayLiteral("rootwindow"))));
 }
 
 /*!
