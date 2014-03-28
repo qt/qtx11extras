@@ -97,17 +97,6 @@ void tst_QX11Info::staticFunctionsBeforeQApplication()
     QCOMPARE(appDpiX, 75);
     QCOMPARE(appDpiY, 75);
 
-#if 0
-    // the setAppDpi{X,Y} calls do nothing if QApplication hasn't been
-    // constructed
-    QX11Info::setAppDpiX(-1, 120);
-    QX11Info::setAppDpiY(-1, 120);
-    appDpiX = QX11Info::appDpiX();
-    appDpiY = QX11Info::appDpiY();
-    QCOMPARE(appDpiX, 75);
-    QCOMPARE(appDpiY, 75);
-#endif
-
     unsigned long appTime = QX11Info::appTime();
     unsigned long appUserTime = QX11Info::appUserTime();
     QCOMPARE(appTime, 0ul);
