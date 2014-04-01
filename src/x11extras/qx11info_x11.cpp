@@ -100,7 +100,7 @@ bool QX11Info::isPlatformX11()
     multiscreen), there is only one X screen. Use QDesktopWidget to
     query for information about Xinerama screens.
 
-    \sa setAppDpiX(), appDpiY()
+    \sa appDpiY()
 */
 int QX11Info::appDpiX(int screen)
 {
@@ -127,7 +127,7 @@ int QX11Info::appDpiX(int screen)
     multiscreen), there is only one X screen. Use QDesktopWidget to
     query for information about Xinerama screens.
 
-    \sa setAppDpiY(), appDpiX()
+    \sa appDpiX()
 */
 int QX11Info::appDpiY(int screen)
 {
@@ -181,7 +181,7 @@ unsigned long QX11Info::appRootWindow(int screen)
     are interested in the monitor information as provided by the X11
     RandR extension. This is available through QDesktopWidget and QScreen.
 
-    \sa display(), screen()
+    \sa display()
 */
 int QX11Info::appScreen()
 {
