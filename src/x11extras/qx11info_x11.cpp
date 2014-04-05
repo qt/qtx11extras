@@ -287,6 +287,53 @@ unsigned long QX11Info::getTimestamp()
 }
 
 /*!
+    Returns the startup ID that will be used for the next window to be shown by this process.
+
+    After the next window is shown, the next startup ID will be empty.
+
+    http://standards.freedesktop.org/startup-notification-spec/startup-notification-latest.txt
+
+    \since 5.4
+    \sa setNextStartupId()
+*/
+QByteArray QX11Info::nextStartupId()
+{
+    if (!qApp)
+        return 0;
+    QPlatformNativeInterface *native = qApp->platformNativeInterface();
+    if (!native)
+        return 0;
+    return static_cast<char *>(native->nativeResourceForIntegration("startupid"));
+}
+
+/*!
+    Sets the next startup ID to \a id.
+
+    This is the startup ID that will be used for the next window to be shown by this process.
+
+    The startup ID of the first window comes from the environment variable DESKTOP_STARTUP_ID.
+    This method is useful for subsequent windows, when the request comes from another process
+    (e.g. via DBus).
+
+    \since 5.4
+    \sa nextStartupId()
+*/
+void QX11Info::setNextStartupId(const QByteArray &id)
+{
+    if (!qApp)
+        return;
+    QPlatformNativeInterface *native = qApp->platformNativeInterface();
+    if (!native)
+        return;
+    typedef void (*SetStartupIdFunc)(const char*);
+    SetStartupIdFunc func = reinterpret_cast<SetStartupIdFunc>(native->nativeResourceFunctionForIntegration("setstartupid"));
+    if (func)
+        func(id.constData());
+    else
+        qWarning("Internal error: QPA plugin doesn't implement setStartupId");
+}
+
+/*!
     Returns the default display for the application.
 
     \sa appScreen()

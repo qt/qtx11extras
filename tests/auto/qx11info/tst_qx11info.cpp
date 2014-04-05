@@ -52,6 +52,7 @@ class tst_QX11Info : public QObject
 
 private slots:
     void staticFunctionsBeforeQApplication();
+    void startupId();
     void isPlatformX11();
     void appTime();
 };
@@ -108,6 +109,34 @@ void tst_QX11Info::staticFunctionsBeforeQApplication()
     appUserTime = QX11Info::appUserTime();
     QCOMPARE(appTime, 0ul);
     QCOMPARE(appTime, 0ul);
+}
+
+static const char idFromEnv[] = "startupid_TIME123456";
+void initialize()
+{
+    qputenv("DESKTOP_STARTUP_ID", idFromEnv);
+}
+Q_CONSTRUCTOR_FUNCTION(initialize)
+
+void tst_QX11Info::startupId()
+{
+    int argc = 0;
+    QApplication app(argc, 0);
+
+    // This relies on the fact that no widget was shown yet,
+    // so please make sure this method is always the first test.
+    QCOMPARE(QString(QX11Info::nextStartupId()), QString(idFromEnv));
+    QWidget w;
+    w.show();
+    QVERIFY(QX11Info::nextStartupId().isEmpty());
+
+    QByteArray idSecondWindow = "startupid2_TIME234567";
+    QX11Info::setNextStartupId(idSecondWindow);
+    QCOMPARE(QX11Info::nextStartupId(), idSecondWindow);
+
+    QWidget w2;
+    w2.show();
+    QVERIFY(QX11Info::nextStartupId().isEmpty());
 }
 
 void tst_QX11Info::isPlatformX11()

@@ -69,6 +69,9 @@ public:
 
     static unsigned long getTimestamp();
 
+    static QByteArray nextStartupId();
+    static void setNextStartupId(const QByteArray &id);
+
     static Display *display();
     static xcb_connection_t *connection();
 
