@@ -43,7 +43,7 @@
     #include <QX11Info>
     \endcode
 
-    To link against the module, add this line to your \l qmake \c
+    To link against the module, add this line to your \l {qmake Manual}{qmake} \c
     .pro file:
 
     \code
