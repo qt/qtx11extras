@@ -338,7 +338,7 @@ Display *QX11Info::display()
     if (!native)
         return NULL;
 
-    void *display = native->nativeResourceForScreen(QByteArray("display"), QGuiApplication::primaryScreen());
+    void *display = native->nativeResourceForIntegration(QByteArray("display"));
     return reinterpret_cast<Display *>(display);
 }
 
@@ -355,7 +355,7 @@ xcb_connection_t *QX11Info::connection()
     if (!native)
         return NULL;
 
-    void *connection = native->nativeResourceForWindow(QByteArray("connection"), 0);
+    void *connection = native->nativeResourceForIntegration(QByteArray("connection"));
     return reinterpret_cast<xcb_connection_t *>(connection);
 }
 
