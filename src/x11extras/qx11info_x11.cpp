@@ -376,4 +376,29 @@ xcb_connection_t *QX11Info::connection()
     return reinterpret_cast<xcb_connection_t *>(connection);
 }
 
+/*!
+    \since 5.7
+
+    Returns true if there is a compositing manager running for the connection
+    attached to \a screen.
+
+    If \l -1, the application primary screen is used.
+*/
+bool QX11Info::isCompositingManagerRunning(int screen)
+{
+    if (!qApp)
+        return false;
+    QPlatformNativeInterface *native = qApp->platformNativeInterface();
+    if (!native)
+        return false;
+
+    QScreen *scr = screen == -1 ?  QGuiApplication::primaryScreen() : findScreenForVirtualDesktop(screen);
+    if (!scr) {
+        qWarning() << "isCompositingManagerRunning: Could not find screen number" << screen;
+        return false;
+    }
+
+    return native->nativeResourceForScreen(QByteArray("compositingEnabled"), scr);
+}
+
 QT_END_NAMESPACE

@@ -96,6 +96,8 @@ void tst_QX11Info::staticFunctionsBeforeQApplication()
     appUserTime = QX11Info::appUserTime();
     QCOMPARE(appTime, 0ul);
     QCOMPARE(appTime, 0ul);
+
+    QX11Info::isCompositingManagerRunning();
 }
 
 static const char idFromEnv[] = "startupid_TIME123456";
