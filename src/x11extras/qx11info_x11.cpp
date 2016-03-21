@@ -49,6 +49,7 @@
 
 #include <qpa/qplatformnativeinterface.h>
 #include <qpa/qplatformwindow.h>
+#include <QtPlatformHeaders/qxcbscreenfunctions.h>
 #include <qscreen.h>
 #include <qwindow.h>
 #include <qguiapplication.h>
@@ -56,6 +57,14 @@
 
 QT_BEGIN_NAMESPACE
 
+static QScreen *findScreenForVirtualDesktop(int virtualDesktopNumber)
+{
+    foreach (QScreen *screen, QGuiApplication::screens()) {
+        if (QXcbScreenFunctions::virtualDesktopNumber(screen) == virtualDesktopNumber)
+            return screen;
+    }
+    return Q_NULLPTR;
+}
 
 /*!
     \class QX11Info
@@ -109,11 +118,11 @@ int QX11Info::appDpiX(int screen)
         return qRound(scr->logicalDotsPerInchX());
     }
 
-    QList<QScreen *> screens = QGuiApplication::screens();
-    if (screen >= screens.size())
+    QScreen *scr = findScreenForVirtualDesktop(screen);
+    if (!scr)
         return 0;
 
-    return screens[screen]->logicalDotsPerInchX();
+    return scr->logicalDotsPerInchX();
 }
 
 /*!
@@ -136,11 +145,11 @@ int QX11Info::appDpiY(int screen)
         return qRound(scr->logicalDotsPerInchY());
     }
 
-    QList<QScreen *> screens = QGuiApplication::screens();
-    if (screen > screens.size())
+    QScreen *scr = findScreenForVirtualDesktop(screen);
+    if (!scr)
         return 0;
 
-    return screens[screen]->logicalDotsPerInchY();
+    return scr->logicalDotsPerInchY();
 }
 
 /*!
@@ -157,11 +166,13 @@ unsigned long QX11Info::appRootWindow(int screen)
 {
     if (!qApp)
         return 0;
-    Q_UNUSED(screen);
     QPlatformNativeInterface *native = qApp->platformNativeInterface();
     if (!native)
         return 0;
-    return static_cast<xcb_window_t>(reinterpret_cast<quintptr>(native->nativeResourceForIntegration(QByteArrayLiteral("rootwindow"))));
+    QScreen *scr = screen == -1 ?  QGuiApplication::primaryScreen() : findScreenForVirtualDesktop(screen);
+    if (!scr)
+        return 0;
+    return static_cast<xcb_window_t>(reinterpret_cast<quintptr>(native->nativeResourceForScreen(QByteArrayLiteral("rootwindow"), scr)));
 }
 
 /*!
