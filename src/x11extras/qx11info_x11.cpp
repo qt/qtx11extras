@@ -382,7 +382,7 @@ xcb_connection_t *QX11Info::connection()
     Returns true if there is a compositing manager running for the connection
     attached to \a screen.
 
-    If \l -1, the application primary screen is used.
+    If \a screen equals -1, the application's primary screen is used.
 */
 bool QX11Info::isCompositingManagerRunning(int screen)
 {
