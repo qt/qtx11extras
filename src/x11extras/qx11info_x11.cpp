@@ -53,6 +53,7 @@
 #include <qscreen.h>
 #include <qwindow.h>
 #include <qguiapplication.h>
+#include <qdebug.h>
 #include <xcb/xcb.h>
 #include <QtCore/qdebug.h>
 
