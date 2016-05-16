@@ -54,6 +54,7 @@
 #include <qwindow.h>
 #include <qguiapplication.h>
 #include <xcb/xcb.h>
+#include <QtCore/qdebug.h>
 
 QT_BEGIN_NAMESPACE
 
