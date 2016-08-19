@@ -1,5 +1,5 @@
 TEMPLATE = subdirs
 
-contains(QT_CONFIG, xcb) {
+qtConfig(xcb) {
   SUBDIRS += auto
 }
