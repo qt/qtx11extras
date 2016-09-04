@@ -60,7 +60,8 @@ QT_BEGIN_NAMESPACE
 
 static QScreen *findScreenForVirtualDesktop(int virtualDesktopNumber)
 {
-    foreach (QScreen *screen, QGuiApplication::screens()) {
+    const auto screens = QGuiApplication::screens();
+    for (QScreen *screen : screens) {
         if (QXcbScreenFunctions::virtualDesktopNumber(screen) == virtualDesktopNumber)
             return screen;
     }
