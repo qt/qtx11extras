@@ -403,4 +403,162 @@ bool QX11Info::isCompositingManagerRunning(int screen)
     return native->nativeResourceForScreen(QByteArray("compositingEnabled"), scr);
 }
 
+/*!
+    Returns a new peeker id or -1 if some interal error has occurred.
+    Each peeker id is associated with an index in the buffered native
+    event queue.
+
+    For more details see QX11Info::PeekOption and peekEventQueue().
+
+    \sa peekEventQueue(), removePeekerId()
+    \since 5.10
+*/
+qint32 QX11Info::generatePeekerId()
+{
+    if (!qApp)
+        return -1;
+    QPlatformNativeInterface *native = qApp->platformNativeInterface();
+    if (!native)
+        return -1;
+
+    typedef qint32 (*GeneratePeekerIdFunc)(void);
+    GeneratePeekerIdFunc generatepeekerid = reinterpret_cast<GeneratePeekerIdFunc>(
+                native->nativeResourceFunctionForIntegration("generatepeekerid"));
+    if (!generatepeekerid) {
+        qWarning("Internal error: QPA plugin doesn't implement generatePeekerId");
+        return -1;
+    }
+
+    return generatepeekerid();
+}
+
+/*!
+    Removes \a peekerId, which was earlier obtained via generatePeekerId().
+
+    Returns \c true on success or \c false if unknown peeker id was
+    provided or some interal error has occurred.
+
+    \sa generatePeekerId()
+    \since 5.10
+*/
+bool QX11Info::removePeekerId(qint32 peekerId)
+{
+    if (!qApp)
+        return false;
+    QPlatformNativeInterface *native = qApp->platformNativeInterface();
+    if (!native)
+        return false;
+
+    typedef bool (*RemovePeekerIdFunc)(qint32);
+    RemovePeekerIdFunc removePeekerId = reinterpret_cast<RemovePeekerIdFunc>(
+                native->nativeResourceFunctionForIntegration("removepeekerid"));
+    if (!removePeekerId) {
+        qWarning("Internal error: QPA plugin doesn't implement removePeekerId");
+        return false;
+    }
+
+    return removePeekerId(peekerId);
+}
+
+/*!
+    \enum QX11Info::PeekOption
+    \brief An enum to tune the behavior of QX11Info::peekEventQueue().
+
+    \value PeekDefault
+    Peek from the beginning of the buffered native event queue. A peeker
+    id is optional with PeekDefault. If a peeker id is provided to
+    peekEventQueue() when using PeekDefault, then peeking starts from
+    the beginning of the queue, not from the cached index; thus, this
+    can be used to manually reset a cached index to peek from the start
+    of the queue. When this operation completes, the associated index
+    will be updated to the new position in the queue.
+
+    \value PeekFromCachedIndex
+    QX11Info::peekEventQueue() can optimize the peeking algorithm by
+    skipping events that it already has seen in earlier calls to
+    peekEventQueue(). When control returns to the main event loop,
+    which causes the buffered native event queue to be flushed to Qt's
+    event queue, the cached indices are marked invalid and will be
+    reset on the next access. The same is true if the program
+    explicitly flushes the buffered native event queue by
+    QCoreApplication::processEvents().
+
+    \since 5.10
+*/
+
+/*!
+    \typedef QX11Info::PeekerCallback
+    Typedef for a pointer to a function with the following signature:
+
+    \code
+    bool (*PeekerCallback)(xcb_generic_event_t *event, void *peekerData);
+    \endcode
+
+    The \a event is a native XCB event.
+    The \a peekerData is a pointer to data, passed in via peekEventQueue().
+
+    Return \c true from this function to stop examining the buffered
+    native event queue or \c false to continue.
+
+    \note A non-capturing lambda can serve as a PeekerCallback.
+    \since 5.10
+*/
+
+/*!
+    \brief Peek into the buffered XCB event queue.
+
+    You can call peekEventQueue() periodically, when your program is busy
+    performing a long-running operation, to peek into the buffered native
+    event queue. The more time the long-running operation blocks the
+    program from returning control to the main event loop, the more
+    events will accumulate in the buffered XCB event queue. Once control
+    returns to the main event loop these events will be flushed to Qt's
+    event queue, which is a separate event queue from the queue this
+    function is peeking into.
+
+    \note It is usually better to run CPU-intensive operations in a
+    non-GUI thread, instead of blocking the main event loop.
+
+    The buffered XCB event queue is populated from a non-GUI thread and
+    therefore might be ahead of the current GUI state. To handle native
+    events as they are processed by the GUI thread, see
+    QAbstractNativeEventFilter::nativeEventFilter().
+
+    The \a peeker is a callback function as documented in PeekerCallback.
+    The \a peekerData can be used to pass in arbitrary data to the \a
+    peeker callback.
+    The \a option is an enum that tunes the behavior of peekEventQueue().
+    The \a peekerId is used to track an index in the queue, for more
+    details see QX11Info::PeekOption. There can be several indices,
+    each tracked individually by a peeker id obtained via generatePeekerId().
+
+    This function returns \c true when the peeker has stopped the event
+    proccesing by returning \c true from the callback. If there were no
+    events in the buffered native event queue to peek at or all the
+    events have been processed by the peeker, this function returns \c
+    false.
+
+    \sa generatePeekerId(), QAbstractNativeEventFilter::nativeEventFilter()
+    \since 5.10
+*/
+bool QX11Info::peekEventQueue(PeekerCallback peeker, void *peekerData, PeekOptions option,
+                              qint32 peekerId)
+{
+    if (!peeker || !qApp)
+        return false;
+    QPlatformNativeInterface *native = qApp->platformNativeInterface();
+    if (!native)
+        return false;
+
+    typedef bool (*PeekEventQueueFunc)(PeekerCallback, void *, PeekOptions, qint32);
+    PeekEventQueueFunc peekeventqueue = reinterpret_cast<PeekEventQueueFunc>(
+                native->nativeResourceFunctionForIntegration("peekeventqueue"));
+    if (!peekeventqueue) {
+        qWarning("Internal error: QPA plugin doesn't implement peekEventQueue");
+        return false;
+    }
+
+    return peekeventqueue(peeker, peekerData, option, peekerId);
+}
+
 QT_END_NAMESPACE
