@@ -65,7 +65,7 @@ static QScreen *findScreenForVirtualDesktop(int virtualDesktopNumber)
         if (QXcbScreenFunctions::virtualDesktopNumber(screen) == virtualDesktopNumber)
             return screen;
     }
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 /*!
