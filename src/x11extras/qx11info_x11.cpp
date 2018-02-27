@@ -250,7 +250,7 @@ void QX11Info::setAppTime(unsigned long time)
         return;
     typedef void (*SetAppTimeFunc)(QScreen *, xcb_timestamp_t);
     QScreen* screen = QGuiApplication::primaryScreen();
-    SetAppTimeFunc func = reinterpret_cast<SetAppTimeFunc>(native->nativeResourceFunctionForScreen("setapptime"));
+    SetAppTimeFunc func = reinterpret_cast<SetAppTimeFunc>(reinterpret_cast<void *>(native->nativeResourceFunctionForScreen("setapptime")));
     if (func)
         func(screen, time);
     else
@@ -271,7 +271,7 @@ void QX11Info::setAppUserTime(unsigned long time)
         return;
     typedef void (*SetAppUserTimeFunc)(QScreen *, xcb_timestamp_t);
     QScreen* screen = QGuiApplication::primaryScreen();
-    SetAppUserTimeFunc func = reinterpret_cast<SetAppUserTimeFunc>(native->nativeResourceFunctionForScreen("setappusertime"));
+    SetAppUserTimeFunc func = reinterpret_cast<SetAppUserTimeFunc>(reinterpret_cast<void *>(native->nativeResourceFunctionForScreen("setappusertime")));
     if (func)
         func(screen, time);
     else
@@ -337,7 +337,7 @@ void QX11Info::setNextStartupId(const QByteArray &id)
     if (!native)
         return;
     typedef void (*SetStartupIdFunc)(const char*);
-    SetStartupIdFunc func = reinterpret_cast<SetStartupIdFunc>(native->nativeResourceFunctionForIntegration("setstartupid"));
+    SetStartupIdFunc func = reinterpret_cast<SetStartupIdFunc>(reinterpret_cast<void *>(native->nativeResourceFunctionForIntegration("setstartupid")));
     if (func)
         func(id.constData());
     else
@@ -423,7 +423,7 @@ qint32 QX11Info::generatePeekerId()
 
     typedef qint32 (*GeneratePeekerIdFunc)(void);
     GeneratePeekerIdFunc generatepeekerid = reinterpret_cast<GeneratePeekerIdFunc>(
-                native->nativeResourceFunctionForIntegration("generatepeekerid"));
+                reinterpret_cast<void *>(native->nativeResourceFunctionForIntegration("generatepeekerid")));
     if (!generatepeekerid) {
         qWarning("Internal error: QPA plugin doesn't implement generatePeekerId");
         return -1;
@@ -451,7 +451,7 @@ bool QX11Info::removePeekerId(qint32 peekerId)
 
     typedef bool (*RemovePeekerIdFunc)(qint32);
     RemovePeekerIdFunc removePeekerId = reinterpret_cast<RemovePeekerIdFunc>(
-                native->nativeResourceFunctionForIntegration("removepeekerid"));
+                reinterpret_cast<void *>(native->nativeResourceFunctionForIntegration("removepeekerid")));
     if (!removePeekerId) {
         qWarning("Internal error: QPA plugin doesn't implement removePeekerId");
         return false;
@@ -552,7 +552,7 @@ bool QX11Info::peekEventQueue(PeekerCallback peeker, void *peekerData, PeekOptio
 
     typedef bool (*PeekEventQueueFunc)(PeekerCallback, void *, PeekOptions, qint32);
     PeekEventQueueFunc peekeventqueue = reinterpret_cast<PeekEventQueueFunc>(
-                native->nativeResourceFunctionForIntegration("peekeventqueue"));
+                reinterpret_cast<void *>(native->nativeResourceFunctionForIntegration("peekeventqueue")));
     if (!peekeventqueue) {
         qWarning("Internal error: QPA plugin doesn't implement peekEventQueue");
         return false;
