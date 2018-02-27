@@ -250,7 +250,7 @@ void QX11Info::setAppTime(unsigned long time)
         return;
     typedef void (*SetAppTimeFunc)(QScreen *, xcb_timestamp_t);
     QScreen* screen = QGuiApplication::primaryScreen();
-    SetAppTimeFunc func = reinterpret_cast<SetAppTimeFunc>(native->nativeResourceFunctionForScreen("setapptime"));
+    SetAppTimeFunc func = reinterpret_cast<SetAppTimeFunc>(reinterpret_cast<void *>(native->nativeResourceFunctionForScreen("setapptime")));
     if (func)
         func(screen, time);
     else
@@ -271,7 +271,7 @@ void QX11Info::setAppUserTime(unsigned long time)
         return;
     typedef void (*SetAppUserTimeFunc)(QScreen *, xcb_timestamp_t);
     QScreen* screen = QGuiApplication::primaryScreen();
-    SetAppUserTimeFunc func = reinterpret_cast<SetAppUserTimeFunc>(native->nativeResourceFunctionForScreen("setappusertime"));
+    SetAppUserTimeFunc func = reinterpret_cast<SetAppUserTimeFunc>(reinterpret_cast<void *>(native->nativeResourceFunctionForScreen("setappusertime")));
     if (func)
         func(screen, time);
     else
@@ -337,7 +337,7 @@ void QX11Info::setNextStartupId(const QByteArray &id)
     if (!native)
         return;
     typedef void (*SetStartupIdFunc)(const char*);
-    SetStartupIdFunc func = reinterpret_cast<SetStartupIdFunc>(native->nativeResourceFunctionForIntegration("setstartupid"));
+    SetStartupIdFunc func = reinterpret_cast<SetStartupIdFunc>(reinterpret_cast<void *>(native->nativeResourceFunctionForIntegration("setstartupid")));
     if (func)
         func(id.constData());
     else
