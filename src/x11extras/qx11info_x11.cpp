@@ -310,10 +310,10 @@ unsigned long QX11Info::getTimestamp()
 QByteArray QX11Info::nextStartupId()
 {
     if (!qApp)
-        return 0;
+        return QByteArray();
     QPlatformNativeInterface *native = qApp->platformNativeInterface();
     if (!native)
-        return 0;
+        return QByteArray();
     return static_cast<char *>(native->nativeResourceForIntegration("startupid"));
 }
 
@@ -352,10 +352,10 @@ void QX11Info::setNextStartupId(const QByteArray &id)
 Display *QX11Info::display()
 {
     if (!qApp)
-        return NULL;
+        return nullptr;
     QPlatformNativeInterface *native = qApp->platformNativeInterface();
     if (!native)
-        return NULL;
+        return nullptr;
 
     void *display = native->nativeResourceForIntegration(QByteArray("display"));
     return reinterpret_cast<Display *>(display);
@@ -369,10 +369,10 @@ Display *QX11Info::display()
 xcb_connection_t *QX11Info::connection()
 {
     if (!qApp)
-        return NULL;
+        return nullptr;
     QPlatformNativeInterface *native = qApp->platformNativeInterface();
     if (!native)
-        return NULL;
+        return nullptr;
 
     void *connection = native->nativeResourceForIntegration(QByteArray("connection"));
     return reinterpret_cast<xcb_connection_t *>(connection);
