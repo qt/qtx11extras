@@ -164,7 +164,12 @@ int QX11Info::appDpiY(int screen)
 
     \sa QApplication::desktop()
 */
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+// ### Qt 6: remove
 unsigned long QX11Info::appRootWindow(int screen)
+#else
+quint32 QX11Info::appRootWindow(int screen)
+#endif
 {
     if (!qApp)
         return 0;
