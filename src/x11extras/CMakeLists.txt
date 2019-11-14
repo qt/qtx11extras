@@ -10,7 +10,7 @@ endif()
 ## X11Extras Module:
 #####################################################################
 
-add_qt_module(X11Extras
+qt_add_module(X11Extras
     SOURCES
         qx11info_x11.cpp qx11info_x11.h
     DEFINES
@@ -22,10 +22,7 @@ add_qt_module(X11Extras
         Qt::Core
         Qt::Gui
 )
-
-#### Keys ignored in scope 1:.:.:x11extras.pro:<TRUE>:
-# _LOADED = "qt_module"
-add_qt_docs(X11Extras
+qt_add_docs(X11Extras
     doc/qtx11extras.qdocconf
 )
 

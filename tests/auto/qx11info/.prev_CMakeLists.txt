@@ -4,12 +4,6 @@
 ## tst_qx11info Test:
 #####################################################################
 
-# begin special case
-if(NOT TARGET XCB::XCB)
-    qt_find_package(XCB REQUIRED PROVIDED_TARGETS XCB::XCB)
-endif()
-# end special case
-
 qt_add_test(tst_qx11info
     SOURCES
         tst_qx11info.cpp
