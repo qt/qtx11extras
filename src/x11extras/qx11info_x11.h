@@ -63,20 +63,16 @@ public:
     static int appDpiX(int screen=-1);
     static int appDpiY(int screen=-1);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    static unsigned long appRootWindow(int screen=-1);
-#else
     static quint32 appRootWindow(int screen=-1);
-#endif
     static int appScreen();
 
-    static unsigned long appTime();
-    static unsigned long appUserTime();
+    static quint32 appTime();
+    static quint32 appUserTime();
 
-    static void setAppTime(unsigned long time);
-    static void setAppUserTime(unsigned long time);
+    static void setAppTime(quint32 time);
+    static void setAppUserTime(quint32 time);
 
-    static unsigned long getTimestamp();
+    static quint32 getTimestamp();
 
     static QByteArray nextStartupId();
     static void setNextStartupId(const QByteArray &id);

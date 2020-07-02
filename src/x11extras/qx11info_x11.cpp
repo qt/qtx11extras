@@ -154,8 +154,6 @@ int QX11Info::appDpiY(int screen)
     return scr->logicalDotsPerInchY();
 }
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-// ### Qt 6: remove
 /*!
     Returns a handle for the applications root window on the given \a screen.
 
@@ -166,10 +164,7 @@ int QX11Info::appDpiY(int screen)
 
     \sa QApplication::desktop()
 */
-unsigned long QX11Info::appRootWindow(int screen)
-#else
 quint32 QX11Info::appRootWindow(int screen)
-#endif
 {
     if (!qApp)
         return 0;
@@ -214,7 +209,7 @@ int QX11Info::appScreen()
 
     \sa setAppTime(), appUserTime()
 */
-unsigned long QX11Info::appTime()
+quint32 QX11Info::appTime()
 {
     if (!qApp)
         return 0;
@@ -230,7 +225,7 @@ unsigned long QX11Info::appTime()
 
     \sa setAppUserTime(), appTime()
 */
-unsigned long QX11Info::appUserTime()
+quint32 QX11Info::appUserTime()
 {
     if (!qApp)
         return 0;
@@ -246,7 +241,7 @@ unsigned long QX11Info::appUserTime()
 
     \sa appTime(), setAppUserTime()
 */
-void QX11Info::setAppTime(unsigned long time)
+void QX11Info::setAppTime(quint32 time)
 {
     if (!qApp)
         return;
@@ -267,7 +262,7 @@ void QX11Info::setAppTime(unsigned long time)
 
     \sa appUserTime(), setAppTime()
 */
-void QX11Info::setAppUserTime(unsigned long time)
+void QX11Info::setAppUserTime(quint32 time)
 {
     if (!qApp)
         return;
@@ -291,7 +286,7 @@ void QX11Info::setAppUserTime(unsigned long time)
 
     \since 5.2
 */
-unsigned long QX11Info::getTimestamp()
+quint32 QX11Info::getTimestamp()
 {
     if (!qApp)
         return 0;
