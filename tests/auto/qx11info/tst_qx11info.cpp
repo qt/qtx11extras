@@ -244,7 +244,7 @@ protected:
         return false;
     }
 
-    void exposeEvent(QExposeEvent *)
+    void exposeEvent(QExposeEvent *) override
     {
         if (m_ignoreSubsequentExpose)
             return;

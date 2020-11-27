@@ -1,0 +1,6 @@
+# Generated from auto.pro.
+
+add_subdirectory(cmake)
+if(TARGET Qt::Widgets)
+    add_subdirectory(qx11info)
+endif()
