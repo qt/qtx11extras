@@ -162,8 +162,6 @@ int QX11Info::appDpiY(int screen)
     the user's system uses Xinerama (as opposed to traditional X11
     multiscreen), there is only one X screen. Use QDesktopWidget to
     query for information about Xinerama screens.
-
-    \sa QApplication::desktop()
 */
 quint32 QX11Info::appRootWindow(int screen)
 {
