@@ -50,6 +50,7 @@
 #include <qpa/qplatformnativeinterface.h>
 #include <qpa/qplatformwindow.h>
 #include <qpa/qplatformscreen_p.h>
+#include <qpa/qplatformscreen.h>
 #include <qscreen.h>
 #include <qwindow.h>
 #include <qguiapplication.h>
@@ -62,8 +63,8 @@ static QScreen *findScreenForVirtualDesktop(int virtualDesktopNumber)
 {
     const auto screens = QGuiApplication::screens();
     for (QScreen *screen : screens) {
-        auto *qxcbScreen = dynamic_cast<QNativeInterface::Private::QXcbScreen *>(screen);
-        if (qxcbScreen->virtualDesktopNumber() == virtualDesktopNumber)
+        auto *qxcbScreen = dynamic_cast<QNativeInterface::Private::QXcbScreen *>(screen->handle());
+        if (qxcbScreen && qxcbScreen->virtualDesktopNumber() == virtualDesktopNumber)
             return screen;
     }
     return nullptr;

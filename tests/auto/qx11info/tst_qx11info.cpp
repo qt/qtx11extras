@@ -43,6 +43,7 @@ private slots:
     void isPlatformX11();
     void appTime();
     void peeker();
+    void isCompositingManagerRunning();
 };
 
 void tst_QX11Info::staticFunctionsBeforeQApplication()
@@ -372,6 +373,17 @@ void tst_QX11Info::peeker()
     test.show();
 
     QVERIFY(QTest::qWaitForWindowExposed(&test));
+}
+
+void tst_QX11Info::isCompositingManagerRunning()
+{
+    int argc = 0;
+    QGuiApplication app(argc, 0);
+    const bool b = QX11Info::isCompositingManagerRunning();
+    Q_UNUSED(b);
+    const bool b2 = QX11Info::isCompositingManagerRunning(0);
+    Q_UNUSED(b2);
+    // just check that it didn't crash (QTBUG-91913)
 }
 
 QTEST_APPLESS_MAIN(tst_QX11Info)
